@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>Movie Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #e0f7fa;
+            text-align: center;
+        }
+        h1 {
+            color: #00796b;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #00796b;
+            color: white;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px auto;
+            background-color: #00796b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Movie Recommendations</h1>
+    {% if recommendations is not none %}
+        {% if recommendations.empty %}
+            <p>No recommendations found. Please try different input or filters.</p>
+        {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Genre</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _, row in recommendations.iterrows() %}
+                        <tr>
+                            <td>{{ row['title'] }}</td>
+                            <td>{{ row['description'] }}</td>
+                            <td>{{ row['genre'] }}</td>
+                            <td>{{ row['rating'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+    <a href="/" class="back-button">Back to Home</a>
+</body>
+</html>

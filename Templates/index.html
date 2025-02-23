@@ -1,0 +1,85 @@
+<html>
+<head>
+    <title>Movie Recommendation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, button {
+            padding: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Recommendation System</h1>
+    <form method="post">
+        <label for="user_input">Describe the type of movie you want:</label>
+        <input type="text" id="user_input" name="user_input" required>
+
+        <label for="genre">Preferred Genre (optional):</label>
+        <input type="text" id="genre" name="genre">
+
+        <label for="min_rating">Minimum Rating (optional, e.g., 4.0):</label>
+        <input type="number" step="0.1" id="min_rating" name="min_rating">
+
+        <label for="N">Number of Recommendations:</label>
+        <input type="number" id="N" name="N" value="5" min="1" max="20">
+
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    {% if recommendations is not none %}
+        {% if recommendations.empty %}
+            <p>No recommendations found. Please try different input or filters.</p>
+        {% else %}
+            <h2>Recommendations</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Genre</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _, row in recommendations.iterrows() %}
+                        <tr>
+                            <td>{{ row['title'] }}</td>
+                            <td>{{ row['description'] }}</td>
+                            <td>{{ row['genre'] }}</td>
+                            <td>{{ row['rating'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
